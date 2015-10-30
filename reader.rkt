@@ -8,13 +8,14 @@
 ;; To read a module:
 (define (read-syntax src-name in)
   (define stx (parse src-name in))
+  (printf "~a~n" (syntax->datum stx))
   (let* ([p-name (object-name in)]
          [name (if (path? p-name)
                    (let-values ([(base name dir?) (split-path p-name)])
                      (string->symbol
                       (path->string (path-replace-suffix name #""))))
                    'anonymous)])
-    (datum->syntax #f `(module ,name "lambda-lang.rkt" (#%module-begin ,@stx)))))
+    (datum->syntax #f `(module ,name "semantics.rkt" (#%module-begin ,@stx)))))
 
 ;; In case `read' is used, instead of `read-syntax':
 (define (read in)
