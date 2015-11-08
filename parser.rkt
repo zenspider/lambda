@@ -31,7 +31,7 @@
 
 (define lex
   (lexer-src-pos
-   [(:seq (:/ #\A #\Z #\a #\z) (:* (:/ #\A #\Z #\a #\z #\0 #\9)))
+   [(:seq (:/ #\A #\Z #\a #\z) (:* (:/ #\A #\Z #\a #\z #\0 #\9))) ; FIX
     (token-NAME (string->symbol lexeme))]
    ["λ"             'LAMBDA]
    ["("             'OPEN]
