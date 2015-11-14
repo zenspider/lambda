@@ -12,13 +12,7 @@
 
 (define (parse src-name in)
   (parameterize ([current-source src-name])
-    (parse-from-lex (lambda ()
-                      ;; Discard whitespace from `lex`:
-                      (let loop ()
-                        (let ([v (lex in)])
-                          (if (eq? 'WHITESPACE (position-token-token v))
-                              (loop)
-                              v)))))))
+    (parse-from-lex (lambda () (lex in)))))
 
 ;; ----------------------------------------
 ;; Lexer
@@ -45,7 +39,7 @@
    ["("             'OPEN]
    [")"             'CLOSE]
    ["."             'DOT]
-   [(:+ whitespace) 'WHITESPACE]
+   [(:+ whitespace) (return-without-pos (lex input-port))]
    [(eof)           'EOF]
    ))
 
