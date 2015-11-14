@@ -120,6 +120,9 @@
                #:unless (eq? 'WHITESPACE (position-token-token x)))
       x))
 
+  (require racket/pretty)
+  (pretty-print (tokenize "λx.x\n"))
+
   (syntax->datum (parse-from-lex (sequence->generator (tokenize "λx.x\n"))))
   (syntax->datum (parse-from-lex (sequence->generator (tokenize "λs.(s s)\n"))))
   (syntax->datum (parse-from-lex (sequence->generator (tokenize "λx.x\nλs.(s s)"))))
