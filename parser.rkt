@@ -29,10 +29,18 @@
 (define-empty-tokens delim-tokens
   (EOF LAMBDA OPEN CLOSE DOT WHITESPACE))
 
+(define-lex-abbrevs                     ; stolen from ragg
+  [letter  (:or (:/ "a" "z") (:/ #\A #\Z))]
+  [digit   (:/ #\0 #\9)]
+  [id-char (:or letter digit (char-set "-!$%&/<=>?^_~@"))])
+
+(define-lex-abbrev id
+  (:& (complement (:+ digit))
+      (:+ id-char)))
+
 (define lex
   (lexer-src-pos
-   [(:seq (:/ #\A #\Z #\a #\z) (:* (:/ #\A #\Z #\a #\z #\0 #\9))) ; FIX
-    (token-NAME (string->symbol lexeme))]
+   [id              (token-NAME (string->symbol lexeme))]
    ["λ"             'LAMBDA]
    ["("             'OPEN]
    [")"             'CLOSE]
