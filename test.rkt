@@ -1,4 +1,4 @@
-#lang reader "reader.rkt"
+#lang lambda
 
 λs.(s s)
 λx.x
